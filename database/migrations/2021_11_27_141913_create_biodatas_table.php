@@ -16,8 +16,9 @@ class CreateBiodatasTable extends Migration
         Schema::create('biodatas', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->string('phone', 20);
+            $table->string('phone', 20)->unique();
             $table->text('address');
+            $table->string('avatar')->nullable();
             $table->timestamps();
         });
     }
