@@ -2,7 +2,12 @@
 
 namespace App\Exceptions;
 
+use App\Http\Resources\V1\Errors\NotFoundErrorsCollection;
+use App\Http\Resources\V1\Errors\ValidationErrorsCollection;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -36,6 +41,20 @@ class Handler extends ExceptionHandler
     {
         $this->reportable(function (Throwable $e) {
             //
+        });
+
+        $this->renderable(function (ValidationException $exception, Request $request) {
+
+            if ($request->wantsJson() || $request->ajax()) {
+                return new ValidationErrorsCollection($exception->errors());
+            }
+        });
+
+        $this->renderable(function (NotFoundHttpException $exception, Request $request) {
+
+            if ($request->wantsJson() || $request->ajax()) {
+                return new NotFoundErrorsCollection(["user" => $exception->getMessage()]);
+            }
         });
     }
 }
