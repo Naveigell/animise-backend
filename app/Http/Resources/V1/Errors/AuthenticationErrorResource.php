@@ -4,13 +4,11 @@ namespace App\Http\Resources\V1\Errors;
 
 use App\Interfaces\StatusCodeable;
 use App\Traits\Api\WithStatusCode;
-use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Http\Resources\Json\JsonResource;
 
-class NotFoundErrorsCollection extends ResourceCollection implements StatusCodeable
+class AuthenticationErrorResource extends JsonResource implements StatusCodeable
 {
     use WithStatusCode;
-
-    public static $wrap = 'errors';
 
     /**
      * Transform the resource into an array.
@@ -20,11 +18,13 @@ class NotFoundErrorsCollection extends ResourceCollection implements StatusCodea
      */
     public function toArray($request)
     {
-        return $this->collection;
+        return [
+            "message" => "Please login before access this action."
+        ];
     }
 
-    public function statusCode() : int
+    public function statusCode(): int
     {
-        return 404;
+        return 401;
     }
 }

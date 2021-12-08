@@ -3,18 +3,14 @@
 namespace App\Http\Resources\V1\Errors;
 
 use App\Interfaces\StatusCodeable;
+use App\Traits\Api\WithStatusCode;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class ValidationErrorsCollection extends ResourceCollection implements StatusCodeable
 {
-    public static $wrap = 'errors';
+    use WithStatusCode;
 
-    public function with($request)
-    {
-        return [
-            "code" => $this->statusCode(),
-        ];
-    }
+    public static $wrap = 'errors';
 
     /**
      * Transform the resource into an array.
