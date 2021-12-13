@@ -27,4 +27,11 @@ class NotFoundErrorsCollection extends ResourceCollection implements StatusCodea
     {
         return 404;
     }
+
+    public function withResponse($request, $response)
+    {
+        $response->setStatusCode(404);
+
+        parent::withResponse($request, $response);
+    }
 }

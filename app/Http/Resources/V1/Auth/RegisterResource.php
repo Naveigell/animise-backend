@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Resources\V1\Errors;
+namespace App\Http\Resources\V1\Auth;
 
 use App\Interfaces\StatusCodeable;
 use App\Traits\Api\WithStatusCode;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class AuthenticationErrorResource extends JsonResource implements StatusCodeable
+class RegisterResource extends JsonResource implements StatusCodeable
 {
     use WithStatusCode;
 
@@ -19,12 +19,13 @@ class AuthenticationErrorResource extends JsonResource implements StatusCodeable
     public function toArray($request)
     {
         return [
-            "message" => ["Please login before access this action."]
+            "fullname" => $this->name,
+            "username" => $this->username,
         ];
     }
 
     public function statusCode(): int
     {
-        return 401;
+        return 201;
     }
 }

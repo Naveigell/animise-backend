@@ -16,7 +16,26 @@ class UserSeeder extends Seeder
     public function run()
     {
         $faker = Factory::create('id_ID');
-        $users = [];
+        $users = [
+            [
+                "name"       => "Admin Animise",
+                "username"   => "admin.animise",
+                "email"      => "admin.animise@gmail.com",
+                "password"   => \Hash::make(123456),
+                "role"       => "admin",
+                "created_at" => now()->toDateTimeString(),
+                "updated_at" => now()->toDateTimeString(),
+            ],
+            [
+                "name"       => "Customer Animise",
+                "username"   => "customer.animise",
+                "email"      => "customer.animise@gmail.com",
+                "password"   => \Hash::make(123456),
+                "role"       => "user",
+                "created_at" => now()->toDateTimeString(),
+                "updated_at" => now()->toDateTimeString(),
+            ],
+        ];
 
         for ($i = 0; $i < 20; $i++) {
             $users[] = [

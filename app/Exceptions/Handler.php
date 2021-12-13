@@ -61,14 +61,14 @@ class Handler extends ExceptionHandler
         $this->renderable(function (UserNotFoundException $exception, Request $request) {
 
             if ($request->wantsJson() || $request->ajax()) {
-                return new NotFoundErrorsCollection(["user" => $exception->getMessage()]);
+                return new NotFoundErrorsCollection(["user" => [$exception->getMessage()]]);
             }
         });
 
         $this->renderable(function (ProductNotFoundException $exception, Request $request) {
 
             if ($request->wantsJson() || $request->ajax()) {
-                return new NotFoundErrorsCollection(["product" => "Product not found."]);
+                return new NotFoundErrorsCollection(["product" => ["Product not found."]]);
             }
         });
     }

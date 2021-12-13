@@ -2,6 +2,7 @@
 
 Route::prefix('auth')->name('auth.')->group(function () {
     Route::post('/login', [\App\Http\Controllers\Api\V1\Auth\AuthController::class, 'login'])->name('login');
+    Route::post('/register', [\App\Http\Controllers\Api\V1\Auth\AuthController::class, 'register'])->name('register');
 });
 
 Route::middleware('substitute.binding')->group(function () {
