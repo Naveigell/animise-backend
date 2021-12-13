@@ -2,12 +2,13 @@
 
 namespace App\Exceptions;
 
+use App\Http\Resources\V1\Errors\AuthenticationErrorResource;
 use App\Http\Resources\V1\Errors\NotFoundErrorsCollection;
 use App\Http\Resources\V1\Errors\ValidationErrorsCollection;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -50,10 +51,24 @@ class Handler extends ExceptionHandler
             }
         });
 
-        $this->renderable(function (NotFoundHttpException $exception, Request $request) {
+        $this->renderable(function (AuthenticationException $exception, Request $request) {
 
             if ($request->wantsJson() || $request->ajax()) {
-                return new NotFoundErrorsCollection(["user" => $exception->getMessage()]);
+                return new AuthenticationErrorResource([]);
+            }
+        });
+
+        $this->renderable(function (UserNotFoundException $exception, Request $request) {
+
+            if ($request->wantsJson() || $request->ajax()) {
+                return new NotFoundErrorsCollection(["user" => [$exception->getMessage()]]);
+            }
+        });
+
+        $this->renderable(function (ProductNotFoundException $exception, Request $request) {
+
+            if ($request->wantsJson() || $request->ajax()) {
+                return new NotFoundErrorsCollection(["product" => ["Product not found."]]);
             }
         });
     }

@@ -11,6 +11,7 @@ use Laravel\Passport\HasApiTokens;
  * Class User
  * @package App\Models
  * @method static|\Illuminate\Database\Eloquent\Builder whereUsername($column, $value = null)
+ * @method static|\Illuminate\Database\Eloquent\Builder where($column, $operator = null, $value = null, $boolean = 'and')
  * @property string username
  * @property string password
  */
@@ -25,6 +26,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'username',
         'email',
         'password',
     ];
@@ -47,4 +49,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = \Hash::make($value);
+    }
 }

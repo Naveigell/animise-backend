@@ -3,18 +3,14 @@
 namespace App\Http\Resources\V1\Errors;
 
 use App\Interfaces\StatusCodeable;
+use App\Traits\Api\WithStatusCode;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class NotFoundErrorsCollection extends ResourceCollection implements StatusCodeable
 {
-    public static $wrap = 'errors';
+    use WithStatusCode;
 
-    public function with($request)
-    {
-        return [
-            "code" => $this->statusCode(),
-        ];
-    }
+    public static $wrap = 'errors';
 
     /**
      * Transform the resource into an array.
@@ -30,5 +26,12 @@ class NotFoundErrorsCollection extends ResourceCollection implements StatusCodea
     public function statusCode() : int
     {
         return 404;
+    }
+
+    public function withResponse($request, $response)
+    {
+        $response->setStatusCode(404);
+
+        parent::withResponse($request, $response);
     }
 }
