@@ -19,6 +19,9 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    const ROLE_CUSTOMER = 'customer';
+    const ROLE_ADMIN    = 'admin';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -49,9 +52,4 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    public function setPasswordAttribute($value)
-    {
-        $this->attributes['password'] = \Hash::make($value);
-    }
 }

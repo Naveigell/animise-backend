@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
                 "name"       => "Admin Animise",
                 "username"   => "admin.animise",
                 "email"      => "admin.animise@gmail.com",
-                "password"   => \Hash::make(123456),
+                "password"   => 123456,
                 "role"       => "admin",
                 "created_at" => now()->toDateTimeString(),
                 "updated_at" => now()->toDateTimeString(),
@@ -30,7 +30,7 @@ class UserSeeder extends Seeder
                 "name"       => "Customer Animise",
                 "username"   => "customer.animise",
                 "email"      => "customer.animise@gmail.com",
-                "password"   => \Hash::make(123456),
+                "password"   => 123456,
                 "role"       => "user",
                 "created_at" => now()->toDateTimeString(),
                 "updated_at" => now()->toDateTimeString(),
@@ -42,7 +42,7 @@ class UserSeeder extends Seeder
                 "name"       => $faker->name,
                 "username"   => $faker->unique->userName,
                 "email"      => $faker->unique->email,
-                "password"   => \Hash::make(123456),
+                "password"   => 123456,
                 "role"       => $this->role($i),
                 "created_at" => now()->toDateTimeString(),
                 "updated_at" => now()->toDateTimeString(),
@@ -54,6 +54,6 @@ class UserSeeder extends Seeder
 
     private function role($index)
     {
-        return $index < 5 ? "admin" : "user";
+        return $index < 5 ? "admin" : "customer";
     }
 }
