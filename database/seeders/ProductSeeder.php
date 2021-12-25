@@ -29,6 +29,7 @@ class ProductSeeder extends Seeder
             $name = $faker->realTextBetween();
 
             $products[] = [
+                "image"        => $faker->image(storage_path('app/public/images/products'), 640, 640, null, false),
                 "name"         => $name,
                 "slug"         => \Str::slug($name),
                 "description"  => $this->description(),
