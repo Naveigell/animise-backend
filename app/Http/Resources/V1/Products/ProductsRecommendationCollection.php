@@ -24,6 +24,7 @@ class ProductsRecommendationCollection extends ResourceCollection implements Sta
                 "name"  => $item->name,
                 "slug"  => $item->slug,
                 "price" => $item->price,
+                "image" => $item->image_url,
             ];
         });
     }
