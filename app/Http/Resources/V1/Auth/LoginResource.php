@@ -11,6 +11,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @package App\Http\Resources\V1\Auth
  * @method \Laravel\Passport\PersonalAccessTokenResult createToken($name, array $scopes = [])
  * @property string username
+ * @property string role
  */
 class LoginResource extends JsonResource implements StatusCodeable
 {
@@ -26,7 +27,8 @@ class LoginResource extends JsonResource implements StatusCodeable
     {
         return [
             "username" => $this->username,
-            "token"    => $this->createToken('nApp')->accessToken
+            "token"    => $this->createToken('nApp')->accessToken,
+            "role"     => $this->role,
         ];
     }
 
