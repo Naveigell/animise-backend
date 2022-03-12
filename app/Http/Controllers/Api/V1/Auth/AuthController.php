@@ -26,7 +26,7 @@ class AuthController extends Controller
             throw new UserNotFoundException("User not found", 404);
         }
 
-        if ($request->password === $user->password) {
+        if ($request->password !== $user->password) {
             throw new UserNotFoundException("Password wrong!", 422);
         }
 
