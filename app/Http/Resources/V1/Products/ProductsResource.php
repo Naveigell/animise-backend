@@ -5,6 +5,7 @@ namespace App\Http\Resources\V1\Products;
 use App\Interfaces\StatusCodeable;
 use App\Traits\Api\WithStatusCode;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Response;
 
 class ProductsResource extends JsonResource implements StatusCodeable
 {
@@ -19,18 +20,19 @@ class ProductsResource extends JsonResource implements StatusCodeable
     public function toArray($request)
     {
         return [
-            "id"           => $this->id,
-            "name"         => $this->name,
-            "slug"         => $this->slug,
-            "description"  => $this->description,
-            "price"        => $this->price,
-            "stock"        => $this->stock,
-            "release_date" => $this->release_date,
+            "id"             => $this->id,
+            "name"           => $this->name,
+            "slug"           => $this->slug,
+            "description"    => $this->description,
+            "price"          => $this->price,
+            "stock"          => $this->stock,
+            "release_date"   => $this->release_date,
+            "estimated_date" => $this->release_date,
         ];
     }
 
     public function statusCode(): int
     {
-        return 200;
+        return Response::HTTP_OK;
     }
 }

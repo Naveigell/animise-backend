@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\V1\Admin\ProductRequest;
+use App\Http\Resources\V1\Products\ProductsResource;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -42,12 +44,12 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Product $slug
-     * @return \Illuminate\Http\Response
+     * @param Product $product
+     * @return ProductsResource
      */
-    public function show(Product $slug)
+    public function show(Product $product)
     {
-        dd($slug);
+        return new ProductsResource($product);
     }
 
     /**
@@ -64,11 +66,11 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param ProductRequest $request
+     * @param Product $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ProductRequest $request, Product $product)
     {
         //
     }
