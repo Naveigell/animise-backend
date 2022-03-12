@@ -31,7 +31,7 @@ class UserSeeder extends Seeder
                 "username"   => "customer.animise",
                 "email"      => "customer.animise@gmail.com",
                 "password"   => 123456,
-                "role"       => "user",
+                "role"       => "customer",
                 "created_at" => now()->toDateTimeString(),
                 "updated_at" => now()->toDateTimeString(),
             ],
