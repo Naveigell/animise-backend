@@ -9,6 +9,7 @@ Route::middleware('substitute.binding')->group(function () {
     Route::middleware('auth:api')->group(function () {
         Route::prefix('admin')->name('admin.')->group(function () {
             Route::resource('products', \App\Http\Controllers\Api\V1\Admin\ProductController::class);
+            Route::resource('banners', \App\Http\Controllers\Api\V1\Admin\BannerController::class)->only('index', 'store', 'destroy');
         });
         Route::resource('carts', \App\Http\Controllers\Api\V1\User\CartController::class);
     });
