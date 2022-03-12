@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
 use App\Models\Product;
 use Faker\Factory;
 use Illuminate\Database\Seeder;
@@ -22,13 +23,15 @@ class ProductSeeder extends Seeder
      */
     public function run()
     {
-        $faker    = Factory::create('id_ID');
-        $products = [];
+        $faker      = Factory::create('id_ID');
+        $products   = [];
+        $categories = Category::query()->pluck('id')->toArray();
 
         for ($i = 0; $i < 30; $i++) {
             $name = $faker->realTextBetween();
 
             $products[] = [
+                "category_id"  => $categories[array_rand($categories)],
                 "image"        => $faker->image(storage_path('app/public/images/products'), 640, 640, null, false),
                 "name"         => $name,
                 "slug"         => \Str::slug($name),

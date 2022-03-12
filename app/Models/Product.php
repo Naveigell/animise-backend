@@ -16,7 +16,7 @@ class Product extends Model
     use HasFactory;
 
     protected $fillable = [
-        'image', 'name', 'description', 'price', 'stock', 'release_date', 'estimated_date',
+        'category_id', 'image', 'name', 'description', 'price', 'stock', 'release_date', 'estimated_date',
     ];
 
     protected $appends = ['image_url'];

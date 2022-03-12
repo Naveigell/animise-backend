@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Api\V1\Admin;
 
+use App\Models\Category;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ProductRequest extends FormRequest
@@ -13,7 +14,10 @@ class ProductRequest extends FormRequest
      */
     public function rules()
     {
+        $categoryIds = Category::query()->pluck('id')->join(',');
+
         return [
+            "category_id"    => "required|integer|min:1|in:{$categoryIds}",
             "image"          => "required|image|mimes:jpg,png,jpeg",
             "name"           => "required|string|min:2|max:255",
             "description"    => "required|string|min:5|max:10000",
