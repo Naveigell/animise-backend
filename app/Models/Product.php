@@ -16,7 +16,7 @@ class Product extends Model
     use HasFactory;
 
     protected $fillable = [
-        'category_id', 'image', 'name', 'description', 'price', 'stock', 'release_date', 'estimated_date',
+        'category_id', 'image', 'name', 'description', 'price', 'stock', 'release_date', 'estimated_date', 'pre_order',
     ];
 
     protected $appends = ['image_url'];
@@ -29,7 +29,7 @@ class Product extends Model
     public function setNameAttribute($value)
     {
         $this->attributes['name'] = $value;
-        $this->attributes['slug'] = \Str::slug($value) . '-' . ($this->id ?? rand(1, 10));
+        $this->attributes['slug'] = \Str::slug($value) . '-' . ($this->id ?? uniqid());
     }
 
     /**

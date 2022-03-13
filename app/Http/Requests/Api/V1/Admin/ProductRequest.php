@@ -25,6 +25,7 @@ class ProductRequest extends FormRequest
             "stock"          => "required|integer|min:|max:9999",
             "release_date"   => "nullable|date",
             "estimated_date" => "nullable|date",
+            "pre_order"      => "nullable|in:0,1",
         ];
     }
 }

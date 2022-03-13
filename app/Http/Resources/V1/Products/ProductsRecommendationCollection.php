@@ -20,11 +20,12 @@ class ProductsRecommendationCollection extends ResourceCollection implements Sta
     {
         return $this->collection->transform(function ($item) {
             return [
-                "id"    => $item->id,
-                "name"  => $item->name,
-                "slug"  => $item->slug,
-                "price" => $item->price,
-                "image" => $item->image_url,
+                "id"        => $item->id,
+                "name"      => $item->name,
+                "slug"      => $item->slug,
+                "price"     => $item->price,
+                "image"     => $item->image_url,
+                "pre_order" => (boolean) $item->pre_order,
             ];
         });
     }
