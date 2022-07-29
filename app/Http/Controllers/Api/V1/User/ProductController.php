@@ -13,16 +13,23 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse|ProductsRecommendationCollection
      */
-    public function index()
+    public function index(Request $request)
     {
+        if ($request->filled('q')) {
+            $products = Product::search($request->query('q'))->stockAvailable()->get();
 
+            return new ProductsRecommendationCollection($products);
+        }
+
+        return response()->json([]);
     }
 
     public function recommendation()
     {
-        $products = Product::inRandomOrder(10)->where('stock', '>', 0)->get();
+        $products = Product::stockAvailable()->inRandomOrder(10)->get();
 
         return new ProductsRecommendationCollection($products);
     }
