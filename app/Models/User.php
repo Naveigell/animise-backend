@@ -12,6 +12,7 @@ use Laravel\Passport\HasApiTokens;
  * @package App\Models
  * @method static|\Illuminate\Database\Eloquent\Builder whereUsername($column, $value = null)
  * @method static|\Illuminate\Database\Eloquent\Builder where($column, $operator = null, $value = null, $boolean = 'and')
+ * @property int    id
  * @property string username
  * @property string password
  */
