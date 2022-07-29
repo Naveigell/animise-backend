@@ -8,14 +8,15 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;
 
 /**
- * @property int    id
- * @property string name
- * @property string slug
- * @property string description
- * @property int    price
- * @property int    stock
- * @property string release_date
- * @property string estimated_date
+ * @property int     id
+ * @property string  name
+ * @property string  description
+ * @property string  slug
+ * @property int     price
+ * @property int     stock
+ * @property string  release_date
+ * @property string  estimated_date
+ * @property boolean pre_order
  */
 class ProductsResource extends JsonResource implements StatusCodeable
 {
@@ -38,6 +39,7 @@ class ProductsResource extends JsonResource implements StatusCodeable
             "stock"          => $this->stock,
             "release_date"   => $this->release_date,
             "estimated_date" => $this->estimated_date,
+            "pre_order"      => (boolean) $this->pre_order,
         ];
     }
 

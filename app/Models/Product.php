@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @method \Illuminate\Database\Eloquent\Builder|static inRandomOrder($seed = '')
@@ -15,6 +17,10 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'category_id', 'image', 'name', 'description', 'price', 'stock', 'release_date', 'estimated_date', 'pre_order',
+    ];
 
     protected $appends = ['image_url'];
 
@@ -40,5 +46,23 @@ class Product extends Model
     public function scopeStockAvailable($query)
     {
         return $query->where('stock', '>', 0);
+    }
+
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = $value;
+        $this->attributes['slug'] = \Str::slug($value) . '-' . ($this->id ?? uniqid());
+    }
+
+    /**
+     * @param UploadedFile $file
+     */
+    public function setImageAttribute($file)
+    {
+        $name = \Str::random(30) . uniqid() . date('dmYHis') . '.' . $file->getClientOriginalExtension();
+
+        Storage::putFileAs('public/images/products', $file, $name);
+
+        $this->attributes['image'] = $name;
     }
 }

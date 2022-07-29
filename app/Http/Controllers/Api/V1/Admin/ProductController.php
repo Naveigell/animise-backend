@@ -7,6 +7,7 @@ use App\Http\Requests\Api\V1\Admin\ProductRequest;
 use App\Http\Resources\V1\Products\ProductsResource;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class ProductController extends Controller
 {
@@ -34,11 +35,14 @@ class ProductController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
-        //
+        $product = new Product($request->validated());
+        $product->save();
+
+        return response()->json([], Response::HTTP_NO_CONTENT);
     }
 
     /**
@@ -68,21 +72,26 @@ class ProductController extends Controller
      *
      * @param ProductRequest $request
      * @param Product $product
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(ProductRequest $request, Product $product)
     {
-        //
+        $product->fill($request->validated());
+        $product->save();
+
+        return response()->json([], Response::HTTP_NO_CONTENT);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Product $product
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($id)
+    public function destroy(Product $product)
     {
-        //
+        $product->delete();
+
+        return response()->json([], Response::HTTP_NO_CONTENT);
     }
 }
