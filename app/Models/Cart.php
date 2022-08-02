@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @method static|\Illuminate\Database\Eloquent\Builder updateOrCreate(array $attributes, array $values = [])
+ * @mixin \Illuminate\Database\Eloquent\Builder
+ * @mixin \Illuminate\Database\Query\Builder
  */
 class Cart extends Model
 {

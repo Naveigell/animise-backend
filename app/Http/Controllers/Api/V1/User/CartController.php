@@ -5,11 +5,15 @@ namespace App\Http\Controllers\Api\V1\User;
 use App\Exceptions\ProductNotFoundException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\User\CartRequest;
+use App\Http\Requests\Api\V1\User\PaymentRequest;
 use App\Http\Resources\V1\Carts\CartsCollection;
 use App\Models\Cart;
+use App\Models\Payment;
 use App\Models\Product;
+use App\Models\ProductOrder;
 use Illuminate\Http\Request;
 use Symfony\Component\CssSelector\Exception\InternalErrorException;
+use Symfony\Component\HttpFoundation\Response;
 
 class CartController extends Controller
 {
@@ -61,6 +65,31 @@ class CartController extends Controller
         }
 
         return response([], 204);
+    }
+
+    public function pay(PaymentRequest $request)
+    {
+        \DB::transaction(function () use ($request) {
+
+            $carts = Cart::where('user_id', $request->user()->id)->get();
+            $carts = array_map(function ($cart) {
+
+                $cart['created_at'] = now()->toDateTimeString();
+                $cart['updated_at'] = now()->toDateTimeString();
+
+                return $cart;
+            }, $carts->toArray());
+
+            Payment::create(array_merge($request->validated(), [
+                "status" => Payment::STATUS_PENDING,
+            ]));
+
+            ProductOrder::insert($carts);
+
+            Cart::where('user_id', $request->user()->id)->delete();
+        });
+
+        return response([], Response::HTTP_NO_CONTENT);
     }
 
     /**

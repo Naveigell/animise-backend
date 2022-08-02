@@ -11,6 +11,7 @@ Route::middleware('substitute.binding')->group(function () {
             Route::resource('products', \App\Http\Controllers\Api\V1\Admin\ProductController::class);
             Route::resource('banners', \App\Http\Controllers\Api\V1\Admin\BannerController::class)->only('index', 'store', 'destroy');
         });
+        Route::post('carts/payment', [\App\Http\Controllers\Api\V1\User\CartController::class, 'pay']);
         Route::resource('carts', \App\Http\Controllers\Api\V1\User\CartController::class);
         Route::resource('wishlists', \App\Http\Controllers\Api\V1\User\WishlistController::class);
     });
