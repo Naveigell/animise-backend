@@ -1,23 +1,18 @@
 <?php
 
-namespace App\Http\Resources\V1\Products;
+namespace App\Http\Resources\V1\User\Wishlist;
 
+use App\Interfaces\StatusCodeable;
+use App\Traits\Api\WithStatusCode;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Http\Response;
 
-/**
- * @property int    id
- * @property string name
- * @property string slug
- * @property string description
- * @property int    price
- * @property int    stock
- * @property string release_date
- * @property string estimated_date
- */
-class ProductsCollection extends ResourceCollection
+class WishlistCollection extends ResourceCollection implements StatusCodeable
 {
+    use WithStatusCode;
+
     /**
-     * Transform the resource collection into an array.
+     * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
@@ -35,5 +30,10 @@ class ProductsCollection extends ResourceCollection
                 "estimated_date" => $wishlist->product->estimated_date,
             ];
         });
+    }
+
+    public function statusCode(): int
+    {
+        return Response::HTTP_OK;
     }
 }

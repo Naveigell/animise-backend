@@ -1,12 +1,16 @@
 <?php
 
-namespace App\Http\Resources\V1\Products;
+namespace App\Http\Resources\V1\Admin\Banners;
 
 use App\Interfaces\StatusCodeable;
 use App\Traits\Api\WithStatusCode;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class ProductsRecommendationCollection extends ResourceCollection implements StatusCodeable
+/**
+ * @property mixed id
+ * @property mixed image_url
+ */
+class BannerCollection extends ResourceCollection implements StatusCodeable
 {
     use WithStatusCode;
 
@@ -18,14 +22,10 @@ class ProductsRecommendationCollection extends ResourceCollection implements Sta
      */
     public function toArray($request)
     {
-        return $this->collection->transform(function ($item) {
+        return $this->collection->transform(function ($banner) {
             return [
-                "id"        => $item->id,
-                "name"      => $item->name,
-                "slug"      => $item->slug,
-                "price"     => $item->price,
-                "image"     => $item->image_url,
-                "pre_order" => (boolean) $item->pre_order,
+                "id"    => $banner->id,
+                "image" => $banner->image_url,
             ];
         });
     }

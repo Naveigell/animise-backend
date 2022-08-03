@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Resources\V1\Carts;
+namespace App\Http\Resources\V1\User\Products;
 
 use App\Interfaces\StatusCodeable;
 use App\Traits\Api\WithStatusCode;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class CartsCollection extends ResourceCollection implements StatusCodeable
+class ProductRecommendationCollection extends ResourceCollection implements StatusCodeable
 {
     use WithStatusCode;
 
@@ -20,13 +20,12 @@ class CartsCollection extends ResourceCollection implements StatusCodeable
     {
         return $this->collection->transform(function ($item) {
             return [
-                "quantity"  => $item->quantity,
-                "product"   => [
-                    "id"    => $item->product->id,
-                    "name"  => $item->product->price,
-                    "stock" => $item->product->stock,
-                    "slug"  => $item->product->slug,
-                ],
+                "id"        => $item->id,
+                "name"      => $item->name,
+                "slug"      => $item->slug,
+                "price"     => $item->price,
+                "image"     => $item->image_url,
+                "pre_order" => (boolean) $item->pre_order,
             ];
         });
     }

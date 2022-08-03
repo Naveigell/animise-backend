@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\V1\Products;
+namespace App\Http\Resources\V1\User\Products;
 
 use App\Interfaces\StatusCodeable;
 use App\Traits\Api\WithStatusCode;
@@ -18,7 +18,7 @@ use Illuminate\Http\Response;
  * @property string  estimated_date
  * @property boolean pre_order
  */
-class ProductsResource extends JsonResource implements StatusCodeable
+class ProductResource extends JsonResource implements StatusCodeable
 {
     use WithStatusCode;
 

@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\Admin\ProductRequest;
-use App\Http\Resources\V1\Products\ProductsResource;
+use App\Http\Resources\V1\Admin\Products\ProductCollection;
+use App\Http\Resources\V1\Admin\Products\ProductResource;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -14,11 +15,11 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return ProductCollection
      */
     public function index()
     {
-        //
+        return new ProductCollection(Product::all());
     }
 
     /**
@@ -49,11 +50,11 @@ class ProductController extends Controller
      * Display the specified resource.
      *
      * @param Product $product
-     * @return ProductsResource
+     * @return ProductResource
      */
     public function show(Product $product)
     {
-        return new ProductsResource($product);
+        return new ProductResource($product);
     }
 
     /**

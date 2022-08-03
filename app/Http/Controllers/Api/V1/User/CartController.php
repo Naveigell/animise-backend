@@ -6,7 +6,7 @@ use App\Exceptions\ProductNotFoundException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\User\CartRequest;
 use App\Http\Requests\Api\V1\User\PaymentRequest;
-use App\Http\Resources\V1\Carts\CartsCollection;
+use App\Http\Resources\V1\User\Carts\CartCollection;
 use App\Models\Cart;
 use App\Models\Payment;
 use App\Models\Product;
@@ -24,7 +24,7 @@ class CartController extends Controller
      */
     public function index(Request $request)
     {
-        return new CartsCollection(Cart::with('product', 'user')->get());
+        return new CartCollection(Cart::with('product', 'user')->get());
     }
 
     /**

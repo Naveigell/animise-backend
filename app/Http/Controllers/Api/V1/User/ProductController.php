@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api\V1\User;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\V1\Products\ProductsRecommendationCollection;
-use App\Http\Resources\V1\Products\ProductsResource;
+use App\Http\Resources\V1\User\Products\ProductRecommendationCollection;
+use App\Http\Resources\V1\User\Products\ProductResource;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -14,14 +14,14 @@ class ProductController extends Controller
      * Display a listing of the resource.
      *
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse|ProductsRecommendationCollection
+     * @return \Illuminate\Http\JsonResponse|ProductRecommendationCollection
      */
     public function index(Request $request)
     {
         if ($request->filled('q')) {
             $products = Product::search($request->query('q'))->stockAvailable()->get();
 
-            return new ProductsRecommendationCollection($products);
+            return new ProductRecommendationCollection($products);
         }
 
         return response()->json([]);
@@ -29,9 +29,9 @@ class ProductController extends Controller
 
     public function recommendation()
     {
-        $products = Product::stockAvailable()->inRandomOrder(10)->get();
+        $products = Product::stockAvailable()->inRandomOrder()->limit(6)->get();
 
-        return new ProductsRecommendationCollection($products);
+        return new ProductRecommendationCollection($products);
     }
 
     /**
@@ -59,11 +59,11 @@ class ProductController extends Controller
      * Display the specified resource.
      *
      * @param Product $product
-     * @return ProductsResource
+     * @return ProductResource
      */
     public function show(Product $product)
     {
-        return new ProductsResource($product);
+        return new ProductResource($product);
     }
 
     /**

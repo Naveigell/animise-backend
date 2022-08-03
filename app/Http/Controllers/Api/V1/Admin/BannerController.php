@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\Admin\BannerRequest;
-use App\Http\Resources\V1\Banners\BannerCollection;
+use App\Http\Resources\V1\Admin\Banners\BannerCollection;
 use App\Models\Banner;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;

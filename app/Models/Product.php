@@ -2,16 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
- * @method \Illuminate\Database\Eloquent\Builder|static inRandomOrder($seed = '')
- * @method \Illuminate\Database\Eloquent\Builder|static find($id, $columns = ['*'])
- * @method \Illuminate\Database\Eloquent\Builder|static search(string $value)
+ * @mixin \Illuminate\Database\Eloquent\Builder
+ * @mixin \Illuminate\Database\Query\Builder
  * @method \Illuminate\Database\Eloquent\Builder|static stockAvailable()
  */
 class Product extends Model

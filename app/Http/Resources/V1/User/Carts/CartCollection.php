@@ -1,16 +1,12 @@
 <?php
 
-namespace App\Http\Resources\V1\Banners;
+namespace App\Http\Resources\V1\User\Carts;
 
 use App\Interfaces\StatusCodeable;
 use App\Traits\Api\WithStatusCode;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-/**
- * @property mixed id
- * @property mixed image_url
- */
-class BannerCollection extends ResourceCollection implements StatusCodeable
+class CartCollection extends ResourceCollection implements StatusCodeable
 {
     use WithStatusCode;
 
@@ -22,10 +18,15 @@ class BannerCollection extends ResourceCollection implements StatusCodeable
      */
     public function toArray($request)
     {
-        return $this->collection->transform(function ($banner) {
+        return $this->collection->transform(function ($item) {
             return [
-                "id"    => $banner->id,
-                "image" => $banner->image_url,
+                "quantity"  => $item->quantity,
+                "product"   => [
+                    "id"    => $item->product->id,
+                    "name"  => $item->product->price,
+                    "stock" => $item->product->stock,
+                    "slug"  => $item->product->slug,
+                ],
             ];
         });
     }

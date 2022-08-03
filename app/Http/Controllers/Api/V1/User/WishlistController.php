@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\V1\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\User\WishlistRequest;
-use App\Http\Resources\V1\Products\ProductsCollection;
+use App\Http\Resources\V1\User\Wishlist\WishlistCollection;
 use App\Models\Wishlist;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -14,13 +14,13 @@ class WishlistController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return ProductsCollection
+     * @return WishlistCollection
      */
     public function index(Request $request)
     {
         $wishlists = Wishlist::with('product')->where('user_id', $request->user()->id)->get();
 
-        return new ProductsCollection($wishlists);
+        return new WishlistCollection($wishlists);
     }
 
     /**
