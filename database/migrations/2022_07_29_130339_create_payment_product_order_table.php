@@ -17,6 +17,7 @@ class CreatePaymentProductOrderTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('product_order_id')->constrained('product_orders')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('payment_id')->constrained('payments')->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
         });
     }

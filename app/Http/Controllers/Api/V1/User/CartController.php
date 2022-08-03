@@ -9,6 +9,7 @@ use App\Http\Requests\Api\V1\User\PaymentRequest;
 use App\Http\Resources\V1\User\Carts\CartCollection;
 use App\Models\Cart;
 use App\Models\Payment;
+use App\Models\PaymentProductOrder;
 use App\Models\Product;
 use App\Models\ProductOrder;
 use Illuminate\Http\Request;
@@ -71,20 +72,26 @@ class CartController extends Controller
     {
         \DB::transaction(function () use ($request) {
 
-            $carts = Cart::where('user_id', $request->user()->id)->get();
-            $carts = array_map(function ($cart) {
-
-                $cart['created_at'] = now()->toDateTimeString();
-                $cart['updated_at'] = now()->toDateTimeString();
-
-                return $cart;
-            }, $carts->toArray());
-
-            Payment::create(array_merge($request->validated(), [
+            $payment = Payment::create(array_merge($request->validated(), [
                 "status" => Payment::STATUS_PENDING,
             ]));
 
-            ProductOrder::insert($carts);
+            $carts = Cart::where('user_id', $request->user()->id)->get();
+
+            foreach ($carts as $cart) {
+                $order = ProductOrder::create(array_merge($cart->toArray(), [
+                    "created_at" => now()->toDateTimeString(),
+                    "updated_at" => now()->toDateTimeString(),
+                ]));
+
+                unset($cart['product_id']);
+                unset($cart['quantity']);
+
+                PaymentProductOrder::create(array_merge($cart->toArray(), [
+                    "product_order_id" => $order->id,
+                    "payment_id"       => $payment->id,
+                ]));
+            }
 
             Cart::where('user_id', $request->user()->id)->delete();
         });
