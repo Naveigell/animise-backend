@@ -16,7 +16,7 @@ class Payment extends Model
 
     public const STATUS_PENDING = 'pending';
 
-    protected $fillable = ['proof', 'status'];
+    protected $fillable = ['shipping_id', 'proof', 'status'];
 
     public function setProofAttribute($file)
     {

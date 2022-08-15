@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePaymentProductOrderTable extends Migration
+class CreateShippingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreatePaymentProductOrderTable extends Migration
      */
     public function up()
     {
-        Schema::create('payment_product_order', function (Blueprint $table) {
+        Schema::create('shippings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->foreignId('product_order_id')->constrained('product_orders')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreignId('payment_id')->constrained('payments')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->string('status')->default(\App\Models\Shipping::STATUS_PENDING);
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreatePaymentProductOrderTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('payment_product_order');
+        Schema::dropIfExists('shippings');
     }
 }

@@ -9,9 +9,9 @@ use App\Http\Requests\Api\V1\User\PaymentRequest;
 use App\Http\Resources\V1\User\Carts\CartCollection;
 use App\Models\Cart;
 use App\Models\Payment;
-use App\Models\PaymentProductOrder;
 use App\Models\Product;
 use App\Models\ProductOrder;
+use App\Models\Shipping;
 use Illuminate\Http\Request;
 use Symfony\Component\CssSelector\Exception\InternalErrorException;
 use Symfony\Component\HttpFoundation\Response;
@@ -72,25 +72,23 @@ class CartController extends Controller
     {
         \DB::transaction(function () use ($request) {
 
-            $payment = Payment::create(array_merge($request->validated(), [
-                "status" => Payment::STATUS_PENDING,
+            $shipping = Shipping::create(["user_id" => $request->user()->id]);
+            $carts    = Cart::where('user_id', $request->user()->id)->get();
+
+            Payment::create(array_merge($request->validated(), [
+                "shipping_id" => $shipping->id,
+                "status"      => Payment::STATUS_PENDING,
             ]));
 
-            $carts = Cart::where('user_id', $request->user()->id)->get();
-
             foreach ($carts as $cart) {
-                $order = ProductOrder::create(array_merge($cart->toArray(), [
-                    "created_at" => now()->toDateTimeString(),
-                    "updated_at" => now()->toDateTimeString(),
+                ProductOrder::create(array_merge($cart->toArray(), [
+                    "shipping_id" => $shipping->id,
+                    "created_at"  => now()->toDateTimeString(),
+                    "updated_at"  => now()->toDateTimeString(),
                 ]));
 
                 unset($cart['product_id']);
                 unset($cart['quantity']);
-
-                PaymentProductOrder::create(array_merge($cart->toArray(), [
-                    "product_order_id" => $order->id,
-                    "payment_id"       => $payment->id,
-                ]));
             }
 
             Cart::where('user_id', $request->user()->id)->delete();
