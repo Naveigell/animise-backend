@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use App\Http\Resources\V1\Errors\AuthenticationErrorResource;
+use App\Http\Resources\V1\Errors\BadRequestErrorResource;
 use App\Http\Resources\V1\Errors\NotFoundErrorsCollection;
 use App\Http\Resources\V1\Errors\ValidationErrorsCollection;
 use Illuminate\Auth\AuthenticationException;
@@ -69,6 +70,13 @@ class Handler extends ExceptionHandler
 
             if ($request->wantsJson() || $request->ajax()) {
                 return new NotFoundErrorsCollection(["product" => ["Product not found."]]);
+            }
+        });
+
+        $this->renderable(function (BadRequestException $exception, Request $request) {
+
+            if ($request->wantsJson() || $request->ajax()) {
+                return new BadRequestErrorResource();
             }
         });
     }
