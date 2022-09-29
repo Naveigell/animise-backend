@@ -21,7 +21,11 @@ class OrderResource extends JsonResource implements StatusCodeable
         return [
             "id"       => $this->resource->id,
             "user"     => $this->resource->user,
-            "payments" => $this->resource->payments,
+            "payments" => $this->resource->payments->map(function ($payment) {
+                return array_merge($payment->toArray(), [
+                    "proof_url" => $payment->proof_url,
+                ]);
+            }),
             "products" => $this->resource->productOrders,
         ];
     }

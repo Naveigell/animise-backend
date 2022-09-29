@@ -26,4 +26,9 @@ class Payment extends Model
 
         $this->attributes['proof'] = $name;
     }
+
+    public function getProofUrlAttribute()
+    {
+        return asset('storage/images/payments/' . $this->attributes['proof']);
+    }
 }
