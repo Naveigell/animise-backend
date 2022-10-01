@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Product;
 use Faker\Factory;
 use Illuminate\Database\Seeder;
+use Illuminate\Http\UploadedFile;
 
 class ProductSeeder extends Seeder
 {
@@ -30,9 +31,9 @@ class ProductSeeder extends Seeder
         for ($i = 0; $i < 30; $i++) {
             $name = $faker->realTextBetween();
 
-            $products[] = [
+            Product::create([
                 "category_id"  => $categories[array_rand($categories)],
-                "image"        => $faker->image(storage_path('app/public/images/products'), 640, 640, null, false),
+                "image"        => UploadedFile::fake()->image(\Str::random(20) . '.jpg'),
                 "name"         => $name,
                 "slug"         => \Str::slug($name),
                 "description"  => $this->description(),
@@ -41,7 +42,7 @@ class ProductSeeder extends Seeder
                 "release_date" => rand(1, 10) < 5 ? $faker->dateTimeBetween('-2 years', '+3 months') : null,
                 "created_at"   => now()->toDateTimeString(),
                 "updated_at"   => now()->toDateTimeString(),
-            ];
+            ]);
         }
 
         Product::query()->insert($products);
