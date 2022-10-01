@@ -19,12 +19,21 @@ class ShippingSeeder extends Seeder
      */
     public function run()
     {
-        $products = Product::limit(100)->get();
-        $users    = User::whereNotIn('role', [User::ROLE_ADMIN])->limit(100)->get();
+        $products         = Product::limit(100)->get();
+        $users            = User::whereNotIn('role', [User::ROLE_ADMIN])->limit(100)->get();
+        $shippingStatuses = [
+            Shipping::STATUS_REJECT,
+            Shipping::STATUS_SEND,
+            Shipping::STATUS_PROCESS,
+            Shipping::STATUS_PENDING,
+        ];
 
         for ($i = 0; $i < 20; $i++) {
-            \DB::transaction(function () use ($users, $products) {
-                    $shipping =  Shipping::create(["user_id" => $users->random()->id]);
+            \DB::transaction(function () use ($users, $products, $shippingStatuses) {
+                    $shipping =  Shipping::create([
+                        "user_id" => $users->random()->id,
+                        "status"  => $shippingStatuses[array_rand($shippingStatuses)],
+                    ]);
 
                     Payment::create([
                         "shipping_id" => $shipping->id,
