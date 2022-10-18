@@ -11,6 +11,9 @@ Route::middleware('substitute.binding')->group(function () {
             Route::resource('products', \App\Http\Controllers\Api\V1\Admin\ProductController::class);
             Route::resource('banners', \App\Http\Controllers\Api\V1\Admin\BannerController::class)->only('index', 'store', 'destroy');
         });
+        Route::prefix('customer')->name('customer.')->group(function () {
+            Route::resource('biodatas', \App\Http\Controllers\Api\V1\User\BiodataController::class)->only('index', 'store');
+        });
         Route::resource('carts', \App\Http\Controllers\Api\V1\User\CartController::class);
     });
 

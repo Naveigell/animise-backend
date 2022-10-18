@@ -26,7 +26,7 @@ class ProductSeeder extends Seeder
         $products = [];
 
         for ($i = 0; $i < 30; $i++) {
-            $name = $faker->realTextBetween();
+            $name = $faker->realTextBetween(5, 10) . uniqid();
 
             $products[] = [
                 "image"        => $faker->image(storage_path('app/public/images/products'), 640, 640, null, false),
