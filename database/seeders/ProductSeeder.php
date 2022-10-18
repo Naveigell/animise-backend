@@ -28,7 +28,7 @@ class ProductSeeder extends Seeder
         $categories = Category::query()->pluck('id')->toArray();
 
         for ($i = 0; $i < 30; $i++) {
-            $name = $faker->realTextBetween();
+            $name = $faker->realTextBetween(5, 10) . uniqid();
 
             $products[] = [
                 "category_id"  => $categories[array_rand($categories)],
