@@ -28,8 +28,8 @@ class BiodataController extends Controller
      */
     public function store(Request $request)
     {
-        $request->user()->update($request->all());
-        $request->user()->biodata()->update($request->all());
+        $request->user()->update($request->only('name', 'username', 'email', 'password'));
+        $request->user()->biodata->update($request->only('phone', 'address', 'avatar'));
 
         return response()->noContent();
     }
