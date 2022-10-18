@@ -18,6 +18,10 @@ class BiodataResource extends JsonResource implements StatusCodeable
      */
     public function toArray($request)
     {
+        $user = $this->resource;
+
+        $user->biodata->avatar_url = $this->resource->biodata->avatar_url;
+
         return [
             "user" => $this->resource,
         ];
