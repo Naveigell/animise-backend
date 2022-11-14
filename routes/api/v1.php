@@ -12,6 +12,7 @@ Route::middleware('substitute.binding')->group(function () {
             Route::resource('banners', \App\Http\Controllers\Api\V1\Admin\BannerController::class)->only('index', 'store', 'destroy');
             Route::resource('orders', \App\Http\Controllers\Api\V1\Admin\OrderController::class)->only('index', 'update')->parameters(["orders" => "shipping"]);
         });
+        Route::resource('banners', \App\Http\Controllers\Api\V1\User\BannerController::class)->only('index');
         Route::post('carts/payment', [\App\Http\Controllers\Api\V1\User\CartController::class, 'pay']);
         Route::resource('carts', \App\Http\Controllers\Api\V1\User\CartController::class)->only('index', 'store');
         Route::resource('wishlists', \App\Http\Controllers\Api\V1\User\WishlistController::class)->only('index', 'store');
