@@ -21,7 +21,7 @@ class CartController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return CartsCollection
      */
     public function index(Request $request)
     {

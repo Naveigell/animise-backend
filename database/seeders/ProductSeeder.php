@@ -7,6 +7,10 @@ use App\Models\Product;
 use Faker\Factory;
 use Illuminate\Database\Seeder;
 use Illuminate\Http\UploadedFile;
+<<<<<<< HEAD
+=======
+use Illuminate\Support\Facades\File;
+>>>>>>> feature/user/banner
 
 class ProductSeeder extends Seeder
 {
@@ -28,12 +32,20 @@ class ProductSeeder extends Seeder
         $products   = [];
         $categories = Category::query()->pluck('id')->toArray();
 
-        for ($i = 0; $i < 30; $i++) {
-            $name = $faker->realTextBetween();
+        File::ensureDirectoryExists(storage_path('app/public/images/products'));
 
+<<<<<<< HEAD
             Product::create([
                 "category_id"  => $categories[array_rand($categories)],
                 "image"        => UploadedFile::fake()->image(\Str::random(20) . '.jpg'),
+=======
+        for ($i = 0; $i < 30; $i++) {
+            $name = $faker->realTextBetween(5, 10) . uniqid();
+
+            Product::query()->create([
+                "category_id"  => $categories[array_rand($categories)],
+                "image"        => UploadedFile::fake()->image(\Str::random() . '.jpg'),
+>>>>>>> feature/user/banner
                 "name"         => $name,
                 "slug"         => \Str::slug($name),
                 "description"  => $this->description(),
@@ -44,8 +56,6 @@ class ProductSeeder extends Seeder
                 "updated_at"   => now()->toDateTimeString(),
             ]);
         }
-
-        Product::query()->insert($products);
     }
 
     public function __construct()
