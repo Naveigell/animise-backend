@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -39,6 +41,22 @@ class Product extends Model
 
     /**
      * @param Builder $query
+     * @param Request $request
+     * @return void
+     */
+    public function scopeFilter($query, Request $request)
+    {
+        $query->when($request->filled('name'), function ($query) use ($request) {
+            $query->search($request->input('name'));
+        });
+
+        $query->when($request->filled('category'), function ($query) use ($request) {
+            $query->where('category_id', $request->input('category'));
+        });
+    }
+
+    /**
+     * @param Builder $query
      * @return Builder
      */
     public function scopeStockAvailable($query)
@@ -62,5 +80,10 @@ class Product extends Model
         Storage::putFileAs('public/images/products', $file, $name);
 
         $this->attributes['image'] = $name;
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 }

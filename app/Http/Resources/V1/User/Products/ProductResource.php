@@ -32,6 +32,7 @@ class ProductResource extends JsonResource implements StatusCodeable
     {
         return [
             "id"             => $this->id,
+            "category"       => $this->category,
             "name"           => $this->name,
             "slug"           => $this->slug,
             "description"    => $this->description,
