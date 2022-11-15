@@ -21,8 +21,8 @@ class CreateProductsTable extends Migration
             $table->text('description');
             $table->double('price');
             $table->unsignedSmallInteger('stock');
-            $table->date('release_date')->nullable();
-            $table->date('estimated_date')->nullable();
+            $table->string('release_date')->nullable();
+            $table->string('estimated_date')->nullable();
 
             $table->timestamps();
         });
