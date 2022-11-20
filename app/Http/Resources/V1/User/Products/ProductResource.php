@@ -41,6 +41,7 @@ class ProductResource extends JsonResource implements StatusCodeable
             "release_date"   => $this->release_date,
             "estimated_date" => $this->estimated_date,
             "pre_order"      => (boolean) $this->pre_order,
+            "image_url"      => $this->image_url,
         ];
     }
 
