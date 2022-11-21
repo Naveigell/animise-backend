@@ -23,9 +23,9 @@ Route::middleware('substitute.binding')->group(function () {
     });
 
     Route::get('/products/recommendation', [\App\Http\Controllers\Api\V1\User\ProductController::class, 'recommendation'])->name('products.recommendation');
-    Route::resource('products', \App\Http\Controllers\Api\V1\User\ProductController::class)->only(
-        ['show', 'index'],
-    )->parameters(
-        ["products" => "product:slug"],
-    );
+    Route::resource('products', \App\Http\Controllers\Api\V1\User\ProductController::class)->only('index')
+        ->parameters(
+            ["products" => "product:slug"],
+        );
+    Route::get('/products/{product}', [\App\Http\Controllers\Api\V1\User\ProductController::class, 'show'])->name('products.show');
 });
