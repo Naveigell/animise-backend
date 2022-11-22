@@ -20,13 +20,9 @@ class CartCollection extends ResourceCollection implements StatusCodeable
     {
         return $this->collection->transform(function ($item) {
             return [
+                "id"        => $item->id,
                 "quantity"  => $item->quantity,
-                "product"   => [
-                    "id"    => $item->product->id,
-                    "name"  => $item->product->price,
-                    "stock" => $item->product->stock,
-                    "slug"  => $item->product->slug,
-                ],
+                "product"   => $item->product,
             ];
         });
     }

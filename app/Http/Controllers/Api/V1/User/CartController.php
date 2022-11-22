@@ -21,21 +21,11 @@ class CartController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return CartsCollection
+     * @return CartCollection
      */
     public function index(Request $request)
     {
         return new CartCollection(Cart::with('product', 'user')->get());
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -98,47 +88,15 @@ class CartController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param CartRequest $request
      * @param Cart $cart
      * @return \Illuminate\Http\Response
      */
-    public function update(CartRequest $request, Cart $cart)
+    public function destroy(Cart $cart)
     {
+        $cart->delete();
 
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return \response()->noContent();
     }
 }
