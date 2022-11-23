@@ -20,6 +20,7 @@ Route::middleware('substitute.binding')->group(function () {
             Route::resource('biodatas', \App\Http\Controllers\Api\V1\User\BiodataController::class)->only('index', 'store');
         });
         Route::resource('search', \App\Http\Controllers\Api\V1\User\SearchProductController::class)->only('index');
+        Route::resource('orders', \App\Http\Controllers\Api\V1\User\OrderController::class)->only('index');
     });
 
     Route::get('/products/recommendation', [\App\Http\Controllers\Api\V1\User\ProductController::class, 'recommendation'])->name('products.recommendation');

@@ -21,4 +21,9 @@ class ProductOrder extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    public function shipping()
+    {
+        return $this->belongsTo(Shipping::class);
+    }
 }
