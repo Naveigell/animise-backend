@@ -15,6 +15,7 @@ Route::middleware('substitute.binding')->group(function () {
         Route::resource('banners', \App\Http\Controllers\Api\V1\User\BannerController::class)->only('index');
         Route::post('carts/payment', [\App\Http\Controllers\Api\V1\User\CartController::class, 'pay']);
         Route::resource('carts', \App\Http\Controllers\Api\V1\User\CartController::class)->only('index', 'store', 'destroy');
+        Route::get('/wishlists/product/{product}', [\App\Http\Controllers\Api\V1\User\WishlistController::class, 'show'])->name('wishlists.product.show');
         Route::resource('wishlists', \App\Http\Controllers\Api\V1\User\WishlistController::class)->only('index', 'store');
         Route::prefix('customer')->name('customer.')->group(function () {
             Route::resource('biodatas', \App\Http\Controllers\Api\V1\User\BiodataController::class)->only('index', 'store');
