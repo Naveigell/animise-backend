@@ -20,7 +20,7 @@ class WishlistController extends Controller
      */
     public function index(Request $request)
     {
-        $wishlists = Wishlist::with('product')->where('user_id', $request->user()->id)->get();
+        $wishlists = Wishlist::with('product.category')->where('user_id', $request->user()->id)->get();
 
         return new WishlistCollection($wishlists);
     }

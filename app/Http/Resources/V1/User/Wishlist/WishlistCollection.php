@@ -19,17 +19,7 @@ class WishlistCollection extends ResourceCollection implements StatusCodeable
      */
     public function toArray($request)
     {
-        return $this->collection->transform(function ($wishlist) {
-            return [
-                "id"             => $wishlist->product->id,
-                "name"           => $wishlist->product->name,
-                "slug"           => $wishlist->product->slug,
-                "price"          => $wishlist->product->price,
-                "stock"          => $wishlist->product->stock,
-                "release_date"   => $wishlist->product->release_date,
-                "estimated_date" => $wishlist->product->estimated_date,
-            ];
-        });
+        return parent::toArray($request);
     }
 
     public function statusCode(): int
